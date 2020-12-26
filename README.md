@@ -1,11 +1,11 @@
-#NOTE
+# NOTE
 this project is in heavy development. errors and bugs can occur!
 *Webinterface coming soon!*
 
 ## XLicense
  Addon for Licensing your Plugins for Minecraft
 
-###Setup with Maven
+### Setup with Maven
 1. add Repository:
 ```xml
 <repositories>
@@ -26,14 +26,14 @@ this project is in heavy development. errors and bugs can occur!
 </dependencies>
 ```
 
-###Setup without Maven
+### Setup without Maven
 1. [Download][releases] the latest release.
-2. ####IntelliJ Idea
+2. #### IntelliJ Idea
     - Go to Project Structure > Modules > Dependencies > + > select the release.
-   ####Eclipse
+   #### Eclipse
     - Properties (Alt+Enter) > Java Build Path > Libraries > Add External JAR's.. > select the release.
 
-##Usage
+## Usage
 ```java
 public final class YourPlugin extends JavaPlugin implements XLicensedPlugin {
 
