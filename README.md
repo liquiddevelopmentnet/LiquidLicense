@@ -42,7 +42,7 @@ public final class YourPlugin extends JavaPlugin implements XLicensedPlugin {
 
         XLicense licenseLib = new XLicense(this); // Initalize XLicenseLib
         try {
-            licenseLib.license("URL", new License("LICENSEKEY", "PLUGINNAME"));
+            licenseLib.license("LICENSESERVERURI", new License("LICENSEKEY", "PLUGINNAME"));
         } catch (LicenseException e) {
             e.printStackTrace();
         }
