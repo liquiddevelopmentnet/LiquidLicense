@@ -18,7 +18,7 @@ import net.liquid.xlicense.types.DenyType;
 import net.liquid.xlicense.types.License;
 import net.liquid.xlicense.types.LicenseException;
 
-public abstract class XLicensedPlugin {
+public interface XLicensedPlugin {
 
     public abstract void onLicenseVerified(License license);
     public abstract void onLicenseDenied(License licence, DenyType denyType);

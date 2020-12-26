@@ -6,8 +6,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="XLicense" />
         <module name="net.liquid.xlicense" />
+      </profile>
+      <profile name="Annotation profile for XLicense" enabled="true">
+        <sourceOutputDir name="build/generated-sources/annotations" />
+        <sourceTestOutputDir name="build/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="XLicense" />
       </profile>
     </annotationProcessing>
   </component>
