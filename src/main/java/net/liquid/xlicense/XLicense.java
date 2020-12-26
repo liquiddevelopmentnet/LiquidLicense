@@ -33,24 +33,25 @@ public class XLicense {
 
         try {
             response = new RequestMaker().makeRequest(url + "?key=" + license.getLicenseKey() + "&plugin=" + license.getPluginName() + "&mac=" + HostUtils.getMacAdress());
-            if (response.equalsIgnoreCase("LICENSE_VALID"))
+            if (response.contains("LICENSE_VALID"))
                 licenseResponseType = LicenseResponseType.LICENSE_VALID;
-            if (response.equalsIgnoreCase("LICENSE_INVALID"))
+            if (response.contains("LICENSE_INVALID"))
                 licenseResponseType = LicenseResponseType.LICENSE_INVALID;
-            if (response.equalsIgnoreCase("LICENSE_EXPIRED"))
+            if (response.contains("LICENSE_EXPIRED"))
                 licenseResponseType = LicenseResponseType.LICENSE_EXPIRED;
-            if (response.equalsIgnoreCase("WRONG_IP"))
+            if (response.contains("WRONG_IP"))
                 licenseResponseType = LicenseResponseType.WRONG_IP;
-            if (response.equalsIgnoreCase("WRONG_PLUGIN_NAME"))
+            if (response.contains("WRONG_PLUGIN_NAME"))
                 licenseResponseType = LicenseResponseType.WRONG_PLUGIN_NAME;
-            if (response.equalsIgnoreCase("FORCE_DELETE"))
+            if (response.contains("FORCE_DELETE"))
                 licenseResponseType = LicenseResponseType.FORCE_DELETE;
-            if (response.equalsIgnoreCase("INTERNAL_ERROR"))
+            if (response.contains("INTERNAL_ERROR"))
                 licenseResponseType = LicenseResponseType.INTERNAL_ERROR;
         } catch (Exception exception) {
             if (exception.getMessage().contains("protocol")) {
                 throw new LicenseException("Please Specify a Protocol like http://" + url, new Throwable(String.valueOf(LicenseErrorType.INTERNAL_ERROR)), LicenseErrorType.INTERNAL_ERROR);
             }
+            exception.printStackTrace();
             throw new LicenseException("Make sure the XLicenseServer on " + url + " is running and up to date!", new Throwable(String.valueOf(LicenseErrorType.SERVER_DOWN)), LicenseErrorType.SERVER_DOWN);
         }
         if(licenseResponseType == null) {
