@@ -10,7 +10,7 @@ this project is in heavy development. errors and bugs can occur!
 ```xml
 <repositories>
    <repository>
-      <id>myMavenRepo.read</id>
+      <id>mymavenrepo</id>
       <url>https://mymavenrepo.com/repo/uTSc4cUWcx6WGgE8eSGR/</url>
    </repository>
 </repositories>
