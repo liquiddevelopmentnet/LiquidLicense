@@ -1,4 +1,4 @@
-package net.liquid.xlicense.utils;/*
+package net.liquid.liquidlicense.utils;/*
 
  *	Urheberrechtshinweis														*
  *																				*

@@ -1,4 +1,4 @@
-package net.liquid.xlicense;/*
+package net.liquid.liquidlicense;/*
 
  *	Urheberrechtshinweis														*
  *																				*
@@ -14,25 +14,31 @@ package net.liquid.xlicense;/*
  *	bedarf der ausdrücklichen, schriftlichen Zustimmung von Finn Behrend    	*
  */
 
-import net.liquid.xlicense.types.*;
-import net.liquid.xlicense.utils.HostUtils;
-import net.liquid.xlicense.utils.RequestMaker;
+import net.liquid.liquidlicense.types.*;
+import net.liquid.liquidlicense.utils.HostUtils;
+import net.liquid.liquidlicense.utils.RequestMaker;
+import org.bukkit.plugin.java.JavaPlugin;
 
-public class XLicense {
+public class LiquidLicenseLib {
 
-    private net.liquid.xlicense.XLicensedPlugin plugin;
+    private LiquidLicensed plugin;
+    private JavaPlugin javaPlugin;
+    private String uri;
 
-    public XLicense(XLicensedPlugin plugin) {
+    public LiquidLicenseLib(String uri, LiquidLicense liquidLicense, LiquidLicensed plugin, JavaPlugin javaPlugin) throws LicenseException {
         this.plugin = plugin;
+        this.javaPlugin = javaPlugin;
+        this.uri = uri;
+        license(liquidLicense);
     }
 
-    public void license(String url, License license) throws LicenseException {
+    private void license(LiquidLicense liquidLicense) throws LicenseException {
 
         String response;
         LicenseResponseType licenseResponseType = null;
 
         try {
-            response = new RequestMaker().makeRequest(url + "?key=" + license.getLicenseKey() + "&plugin=" + license.getPluginName() + "&mac=" + HostUtils.getMacAdress());
+            response = new RequestMaker().makeRequest(this.uri + "?key=" + liquidLicense.getLicenseKey() + "&plugin=" + javaPlugin.getName() + "&mac=" + HostUtils.getMacAdress());
             if (response.contains("LICENSE_VALID"))
                 licenseResponseType = LicenseResponseType.LICENSE_VALID;
             if (response.contains("LICENSE_INVALID"))
@@ -49,27 +55,27 @@ public class XLicense {
                 licenseResponseType = LicenseResponseType.INTERNAL_ERROR;
         } catch (Exception exception) {
             if (exception.getMessage().contains("protocol")) {
-                throw new LicenseException("Please Specify a Protocol like http://" + url, new Throwable(String.valueOf(LicenseErrorType.INTERNAL_ERROR)), LicenseErrorType.INTERNAL_ERROR);
+                throw new LicenseException("Please Specify a Protocol like http://" + this.uri, new Throwable(String.valueOf(LicenseErrorType.INTERNAL_ERROR)), LicenseErrorType.INTERNAL_ERROR);
             }
             exception.printStackTrace();
-            throw new LicenseException("Make sure the XLicenseServer on " + url + " is running and up to date!", new Throwable(String.valueOf(LicenseErrorType.SERVER_DOWN)), LicenseErrorType.SERVER_DOWN);
+            throw new LicenseException("Make sure the LiquidLicenseServer on " + this.uri + " is running and up to date!", new Throwable(String.valueOf(LicenseErrorType.SERVER_DOWN)), LicenseErrorType.SERVER_DOWN);
         }
         if(licenseResponseType == null) {
-            throw new LicenseException("Make sure the XLicenseServer on " + url + " is running and up to date!", new Throwable(String.valueOf(LicenseErrorType.SERVER_DOWN)), LicenseErrorType.SERVER_DOWN);
+            throw new LicenseException("Make sure the LiquidLicenseServer on " + this.uri + " is running and up to date!", new Throwable(String.valueOf(LicenseErrorType.SERVER_DOWN)), LicenseErrorType.SERVER_DOWN);
         } else if (licenseResponseType.equals(LicenseResponseType.LICENSE_VALID)) {
-            this.plugin.onLicenseVerified(license);
+            this.plugin.onLicenseVerified(liquidLicense);
             return;
         } else if (licenseResponseType.equals(LicenseResponseType.LICENSE_INVALID)) {
-            this.plugin.onLicenseDenied(license, DenyType.INVALID);
+            this.plugin.onLicenseDenied(liquidLicense, DenyType.INVALID);
             return;
         } else if (licenseResponseType.equals(LicenseResponseType.LICENSE_EXPIRED)) {
-            this.plugin.onLicenseDenied(license, DenyType.EXPIRED);
+            this.plugin.onLicenseDenied(liquidLicense, DenyType.EXPIRED);
             return;
         } else if (licenseResponseType.equals(LicenseResponseType.WRONG_PLUGIN_NAME)) {
-            this.plugin.onLicenseDenied(license, DenyType.WRONG_PLUGIN_NAME);
+            this.plugin.onLicenseDenied(liquidLicense, DenyType.WRONG_PLUGIN_NAME);
             return;
         } else if (licenseResponseType.equals(LicenseResponseType.WRONG_IP)) {
-            this.plugin.onLicenseDenied(license, DenyType.WRONG_IP);
+            this.plugin.onLicenseDenied(liquidLicense, DenyType.WRONG_IP);
             return;
         } else if (licenseResponseType.equals(LicenseResponseType.FORCE_DELETE)) {
             // Future function

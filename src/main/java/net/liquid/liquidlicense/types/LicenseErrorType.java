@@ -1,4 +1,4 @@
-package net.liquid.xlicense.types;/*
+package net.liquid.liquidlicense.types;/*
 
  *	Urheberrechtshinweis														*
  *																				*

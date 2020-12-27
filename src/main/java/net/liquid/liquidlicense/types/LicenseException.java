@@ -1,9 +1,9 @@
-package net.liquid.xlicense.types;/*
+package net.liquid.liquidlicense.types;/*
 
  *	Urheberrechtshinweis														*
  *																				*
  *	Copyright © Finn Behrend 2020										        *
- *	Erstellt: 25.12.2020 / 13:53											    *
+ *	Erstellt: 25.12.2020 / 13:52											    *
  *																				*
  *	Alle Inhalte dieses Quelltextes sind urheberrechtlich geschützt.			*
  *	Das Urheberrecht liegt, soweit nicht ausdrücklich anders gekennzeichnet,	*
@@ -14,8 +14,17 @@ package net.liquid.xlicense.types;/*
  *	bedarf der ausdrücklichen, schriftlichen Zustimmung von Finn Behrend    	*
  */
 
-public enum LicenseResponseType {
+public class LicenseException extends Exception {
 
-    LICENSE_VALID, LICENSE_INVALID, LICENSE_EXPIRED, WRONG_PLUGIN_NAME, WRONG_IP, FORCE_DELETE, INTERNAL_ERROR
+    protected LicenseErrorType licenseErrorType;
 
+    public LicenseException(String errorMessage, Throwable err, LicenseErrorType licenseErrorType) {
+        super(errorMessage, err);
+        this.licenseErrorType = licenseErrorType;
+
+    }
+
+    public LicenseErrorType getLicenseErrorType() {
+        return licenseErrorType;
+    }
 }

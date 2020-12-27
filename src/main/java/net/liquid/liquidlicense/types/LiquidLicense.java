@@ -1,9 +1,9 @@
-package net.liquid.xlicense.types;/*
+package net.liquid.liquidlicense.types;/*
 
  *	Urheberrechtshinweis														*
  *																				*
  *	Copyright © Finn Behrend 2020										        *
- *	Erstellt: 25.12.2020 / 15:34											    *
+ *	Erstellt: 25.12.2020 / 13:48											    *
  *																				*
  *	Alle Inhalte dieses Quelltextes sind urheberrechtlich geschützt.			*
  *	Das Urheberrecht liegt, soweit nicht ausdrücklich anders gekennzeichnet,	*
@@ -14,8 +14,20 @@ package net.liquid.xlicense.types;/*
  *	bedarf der ausdrücklichen, schriftlichen Zustimmung von Finn Behrend    	*
  */
 
-public enum DenyType {
+public class LiquidLicense {
 
-    INVALID, EXPIRED, WRONG_PLUGIN_NAME, WRONG_IP
+    protected String licenseKey;
+
+    public LiquidLicense(String licenseKey) {
+        this.licenseKey = licenseKey;
+    }
+
+    public String getLicenseKey() {
+        return licenseKey;
+    }
+
+    public void setLicenseKey(String licenseKey) {
+        this.licenseKey = licenseKey;
+    }
 
 }

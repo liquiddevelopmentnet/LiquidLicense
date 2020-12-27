@@ -2,7 +2,7 @@
 this project is in heavy development. errors and bugs can occur!
 *Webinterface coming soon!*
 
-## XLicense
+## LiquidLicense
  Addon for Licensing your Plugins for Minecraft
 
 ### Setup with Maven
@@ -20,7 +20,7 @@ this project is in heavy development. errors and bugs can occur!
 <dependencies>
    <dependency>
       <groupId>net.liquid</groupId>
-      <artifactId>XLicense</artifactId>
+      <artifactId>LiquidLicense</artifactId>
       <version>latest</version>
    </dependency>
 </dependencies>
@@ -34,43 +34,41 @@ this project is in heavy development. errors and bugs can occur!
     - Properties (Alt+Enter) > Java Build Path > Libraries > Add External JAR's.. > select the release.
 
 ## Usage
+
 ```java
-public final class YourPlugin extends JavaPlugin implements XLicensedPlugin {
+import net.liquid.liquidlicense.types.LiquidLicense;
+import net.liquid.liquidlicense.types.DenyType;
+import net.liquid.liquidlicense.LiquidLicenseLib;
 
-    @Override
-    public void onEnable() {
+public final class YourPlugin extends JavaPlugin implements LiquidLicensed {
 
-        XLicense licenseLib = new XLicense(this); // Initalize XLicenseLib
-        try {
-            licenseLib.license("LICENSESERVERURI", new License("LICENSEKEY", "PLUGINNAME"));
-        } catch (LicenseException e) {
-            e.printStackTrace();
-        }
+   @Override
+   public void onEnable() {
 
-    }
+      new LiquidLicenseLib("AUTHENTICATION_SERVER_URI", new LiquidLicense("LICENSEKEY"), this, this);
 
-    @Override
-    public void onDisable() {
-        // Plugin shutdown logic
-    }
+   }
 
-    @Override
-    public void onLicenseVerified(License license) {
-        System.out.println("License Valid!");
-    }
+   @Override
+   public void onDisable() {}
 
-    @Override
-    public void onLicenseDenied(License license, DenyType denyType) {
-        System.out.println("License not Valid. Reason: "+denyType.toString());
-        Bukkit.shutdown();
-    }
+   @Override
+   public void onLicenseVerified(License liquidLicense) {
+      System.out.println("License Valid!");
+   }
 
-    @Override
-    public void onLicenseError(LicenseException e) {
-       e.printStackTrace();
-    }
+   @Override
+   public void onLicenseDenied(License liquidLicense, DenyType denyType) {
+      System.out.println("License not Valid. Reason: " + denyType.toString());
+      Bukkit.shutdown();
+   }
+
+   @Override
+   public void onLicenseError(LicenseException e) {
+      e.printStackTrace();
+   }
 }
 ```
 
-[releases]: <https://github.com/liquiddevelopmentnet/XLicense/releases>
-[clone]: <https://github.com/liquiddevelopmentnet/XLicense.git>
+[releases]: <https://github.com/liquiddevelopmentnet/LiquidLicense/releases>
+[clone]: <https://github.com/liquiddevelopmentnet/LiquidLicense.git>
