@@ -1,6 +1,5 @@
 # NOTE
-this project is in heavy development. errors and bugs can occur!
-*Webinterface coming soon!*
+*The Web part is missing completely. Coming soon!*
 
 ## LiquidLicense
  Addon for Licensing your Plugins for Minecraft
