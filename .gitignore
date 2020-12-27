@@ -1,3 +1,6 @@
 .idea/
 build/
 XLicense.iml
+.gitignore
+.gitattributes
+.github
