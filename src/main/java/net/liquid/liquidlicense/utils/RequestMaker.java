@@ -14,14 +14,20 @@ package net.liquid.liquidlicense.utils;/*
  *	bedarf der ausdrücklichen, schriftlichen Zustimmung von Finn Behrend    	*
  */
 
+import net.liquid.liquidlicense.types.LicenseResponseType;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class RequestMaker {
 
-    public String makeRequest(String urlString) throws Exception {
+    public static String makeResponseRequest(String urlString) throws Exception {
         StringBuilder content = new StringBuilder();
 
         URL url = new URL(urlString);
@@ -29,17 +35,7 @@ public class RequestMaker {
         URLConnection urlConnection = url.openConnection();
         urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; de-DE; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
 
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-
-        String line;
-
-        while ((line = bufferedReader.readLine()) != null)
-        {
-            content.append(line + "\n");
-        }
-        bufferedReader.close();
-
-        return content.toString();
+        return urlConnection.getHeaderField("response");
 
     }
 

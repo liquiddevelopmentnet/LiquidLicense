@@ -19,6 +19,8 @@ import net.liquid.liquidlicense.utils.HostUtils;
 import net.liquid.liquidlicense.utils.RequestMaker;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+
 public class LiquidLicenseLib {
 
     private LiquidLicensed plugin;
@@ -32,27 +34,16 @@ public class LiquidLicenseLib {
         license(liquidLicense);
     }
 
+    public LiquidLicenseLib() {}
+
     private void license(LiquidLicense liquidLicense) throws LicenseException {
 
         String response;
         LicenseResponseType licenseResponseType = null;
 
         try {
-            response = new RequestMaker().makeRequest(this.uri + "?key=" + liquidLicense.getLicenseKey() + "&plugin=" + javaPlugin.getName() + "&mac=" + HostUtils.getMacAdress());
-            if (response.contains("LICENSE_VALID"))
-                licenseResponseType = LicenseResponseType.LICENSE_VALID;
-            if (response.contains("LICENSE_INVALID"))
-                licenseResponseType = LicenseResponseType.LICENSE_INVALID;
-            if (response.contains("LICENSE_EXPIRED"))
-                licenseResponseType = LicenseResponseType.LICENSE_EXPIRED;
-            if (response.contains("WRONG_IP"))
-                licenseResponseType = LicenseResponseType.WRONG_IP;
-            if (response.contains("WRONG_PLUGIN_NAME"))
-                licenseResponseType = LicenseResponseType.WRONG_PLUGIN_NAME;
-            if (response.contains("FORCE_DELETE"))
-                licenseResponseType = LicenseResponseType.FORCE_DELETE;
-            if (response.contains("INTERNAL_ERROR"))
-                licenseResponseType = LicenseResponseType.INTERNAL_ERROR;
+            response = new RequestMaker().makeResponseRequest(this.uri + "?key=" + liquidLicense.getLicenseKey() + "&plugin=" + javaPlugin.getName() + "&mac=" + HostUtils.getMacAdress());
+            licenseResponseType = LicenseResponseType.valueOf(response);
         } catch (Exception exception) {
             if (exception.getMessage().contains("protocol")) {
                 throw new LicenseException("Please Specify a Protocol like http://" + this.uri, new Throwable(String.valueOf(LicenseErrorType.INTERNAL_ERROR)), LicenseErrorType.INTERNAL_ERROR);
