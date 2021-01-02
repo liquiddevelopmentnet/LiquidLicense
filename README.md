@@ -9,8 +9,8 @@
 ```xml
 <repositories>
    <repository>
-      <id>mymavenrepo</id>
-      <url>https://mymavenrepo.com/repo/uTSc4cUWcx6WGgE8eSGR/</url>
+      <id>minemix</id>
+      <url>http://oss.minemix.de/repository/maven-releases/</url>
    </repository>
 </repositories>
 ```
