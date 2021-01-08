@@ -45,6 +45,7 @@ public final class YourBukkitPlugin extends JavaPlugin implements LiquidLicensed
    @Override
    public void onEnable() {
 
+      //Check if License is Valid (put this always at the top from onEnable)
       new LiquidLicenseLib("AUTHENTICATION_SERVER_URI", new LiquidLicense("LICENSEKEY"), this, this);
 
    }
@@ -55,17 +56,20 @@ public final class YourBukkitPlugin extends JavaPlugin implements LiquidLicensed
 
    @Override
    public void onLicenseVerified(License liquidLicense) {
+      //Executed if License is valid 
       System.out.println("License Valid!");
    }
 
    @Override
    public void onLicenseDenied(License liquidLicense, DenyType denyType) {
+      //Executed if License is dont valid
       System.out.println("License not Valid. Reason: " + denyType.toString());
       Bukkit.shutdown();
    }
 
    @Override
    public void onLicenseError(LicenseException e) {
+      //Executed if a Licensing error occurs
       e.printStackTrace();
    }
 }
@@ -85,6 +89,7 @@ public final class YourBungeeCordPlugin extends Plugin implements LiquidLicensed
    @Override
    public void onEnable() {
 
+      //Check if License is Valid (put this always at the top from onEnable)
       new LiquidLicenseLib("AUTHENTICATION_SERVER_URI", new LiquidLicense("LICENSEKEY"), this, this);
 
    }
@@ -95,17 +100,20 @@ public final class YourBungeeCordPlugin extends Plugin implements LiquidLicensed
 
    @Override
    public void onLicenseVerified(License liquidLicense) {
+      //Executed if License is valid 
       System.out.println("License Valid!");
    }
 
    @Override
    public void onLicenseDenied(License liquidLicense, DenyType denyType) {
+      //Executed if License is dont valid
       System.out.println("License not Valid. Reason: " + denyType.toString());
       ProxyServer.getInstance().stop();
    }
 
    @Override
    public void onLicenseError(LicenseException e) {
+      //Executed if a Licensing error occurs
       e.printStackTrace();
    }
 }
