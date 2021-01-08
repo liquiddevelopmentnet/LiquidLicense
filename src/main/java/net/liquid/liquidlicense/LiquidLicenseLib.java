@@ -17,6 +17,7 @@ package net.liquid.liquidlicense;/*
 import net.liquid.liquidlicense.types.*;
 import net.liquid.liquidlicense.utils.HostUtils;
 import net.liquid.liquidlicense.utils.RequestMaker;
+import net.md_5.bungee.api.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -24,12 +25,20 @@ import java.io.File;
 public class LiquidLicenseLib {
 
     private LiquidLicensed plugin;
-    private JavaPlugin javaPlugin;
+    private JavaPlugin bukkit = null;
+    private Plugin bungee = null;
     private String uri;
 
     public LiquidLicenseLib(String uri, LiquidLicense liquidLicense, LiquidLicensed plugin, JavaPlugin javaPlugin) throws LicenseException {
         this.plugin = plugin;
-        this.javaPlugin = javaPlugin;
+        this.bukkit = javaPlugin;
+        this.uri = uri;
+        license(liquidLicense);
+    }
+
+    public LiquidLicenseLib(String uri, LiquidLicense liquidLicense, LiquidLicensed plugin, Plugin bungeePlugin) throws LicenseException {
+        this.plugin = plugin;
+        this.bungee = bungeePlugin;
         this.uri = uri;
         license(liquidLicense);
     }
@@ -42,7 +51,7 @@ public class LiquidLicenseLib {
         LicenseResponseType licenseResponseType = null;
 
         try {
-            response = new RequestMaker().makeResponseRequest(this.uri + "?key=" + liquidLicense.getLicenseKey() + "&plugin=" + javaPlugin.getName() + "&mac=" + HostUtils.getMacAdress());
+            response = new RequestMaker().makeResponseRequest(this.uri + "?key=" + liquidLicense.getLicenseKey() + "&plugin=" + bukkit == null ? bungee.getDescription().getName() : bukkit.getName() + "&mac=" + HostUtils.getMacAdress());
             licenseResponseType = LicenseResponseType.valueOf(response);
         } catch (Exception exception) {
             if (exception.getMessage().contains("protocol")) {

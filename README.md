@@ -32,14 +32,15 @@
    #### Eclipse
     - Properties (Alt+Enter) > Java Build Path > Libraries > Add External JAR's.. > select the release.
 
-## Usage
+## Bukkit Usage
 
 ```java
 import net.liquid.liquidlicense.types.LiquidLicense;
 import net.liquid.liquidlicense.types.DenyType;
 import net.liquid.liquidlicense.LiquidLicenseLib;
+import org.bukkit.plugin.java.JavaPlugin;
 
-public final class YourPlugin extends JavaPlugin implements LiquidLicensed {
+public final class YourBukkitPlugin extends JavaPlugin implements LiquidLicensed {
 
    @Override
    public void onEnable() {
@@ -49,7 +50,8 @@ public final class YourPlugin extends JavaPlugin implements LiquidLicensed {
    }
 
    @Override
-   public void onDisable() {}
+   public void onDisable() {
+   }
 
    @Override
    public void onLicenseVerified(License liquidLicense) {
@@ -60,6 +62,46 @@ public final class YourPlugin extends JavaPlugin implements LiquidLicensed {
    public void onLicenseDenied(License liquidLicense, DenyType denyType) {
       System.out.println("License not Valid. Reason: " + denyType.toString());
       Bukkit.shutdown();
+   }
+
+   @Override
+   public void onLicenseError(LicenseException e) {
+      e.printStackTrace();
+   }
+}
+```
+
+## BungeeCord Usage
+
+```java
+import net.liquid.liquidlicense.types.LiquidLicense;
+import net.liquid.liquidlicense.types.DenyType;
+import net.liquid.liquidlicense.LiquidLicenseLib;
+import net.md_5.bungee.api.ProxyServer;
+import net.md_5.bungee.api.plugin.Plugin;
+
+public final class YourBungeeCordPlugin extends Plugin implements LiquidLicensed {
+
+   @Override
+   public void onEnable() {
+
+      new LiquidLicenseLib("AUTHENTICATION_SERVER_URI", new LiquidLicense("LICENSEKEY"), this, this);
+
+   }
+
+   @Override
+   public void onDisable() {
+   }
+
+   @Override
+   public void onLicenseVerified(License liquidLicense) {
+      System.out.println("License Valid!");
+   }
+
+   @Override
+   public void onLicenseDenied(License liquidLicense, DenyType denyType) {
+      System.out.println("License not Valid. Reason: " + denyType.toString());
+      ProxyServer.getInstance().stop();
    }
 
    @Override
