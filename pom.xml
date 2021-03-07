@@ -6,10 +6,16 @@
 
     <groupId>net.liquid</groupId>
     <artifactId>LiquidLicense</artifactId>
-    <version>3.0</version>
+    <version>3.1</version>
 
     <build>
-        <finalName>XLicense</finalName>
+        <finalName>LiquidLicense</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
 
             <plugin>
@@ -64,7 +70,6 @@
             </plugin>
 
         </plugins>
-
         <directory>C:\Users\Finn\IdeaProjects\XLicense\build</directory>
     </build>
 

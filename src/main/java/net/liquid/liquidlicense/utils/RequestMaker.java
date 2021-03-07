@@ -14,26 +14,35 @@ package net.liquid.liquidlicense.utils;/*
  *	bedarf der ausdrücklichen, schriftlichen Zustimmung von Finn Behrend    	*
  */
 
-import net.liquid.liquidlicense.types.LicenseResponseType;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Properties;
 
 public class RequestMaker {
 
-    public static String makeResponseRequest(String urlString) throws Exception {
-        StringBuilder content = new StringBuilder();
+    public static void main(String[] args) throws Exception {
+        new RequestMaker().makeResponseRequest("https://httpreq.com/black-breeze-0fr3a087/record");
+    }
+
+    public String makeResponseRequest(String urlString) throws Exception {
+
+        Properties prop = new Properties();
+        String propFileName = ".properties";
+
+        InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(propFileName);
+
+        if (inputStream != null) {
+            prop.load(inputStream);
+        }
+
+        String version = prop.getProperty("version");
 
         URL url = new URL(urlString);
 
         URLConnection urlConnection = url.openConnection();
-        urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; de-DE; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
+        urlConnection.setRequestProperty("User-Agent", "LiquidLicense/"+version+" (liquiddevelopmentnet; U; LiquidLicense; en-US; rv:1.9.2.2) Gecko/20100316 LiquidLicense/"+version);
 
         return urlConnection.getHeaderField("response");
 
