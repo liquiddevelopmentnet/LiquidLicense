@@ -51,17 +51,17 @@ public class LiquidLicenseLib {
         LicenseResponseType licenseResponseType = null;
 
         try {
-            response = new RequestMaker().makeResponseRequest(this.uri + "?key=" + liquidLicense.getLicenseKey() + "&plugin=" + bukkit == null ? bungee.getDescription().getName() : bukkit.getName() + "&mac=" + HostUtils.getMacAdress());
+            response = new RequestMaker().makeResponseRequest(this.uri + "/req/" + "?key=" + liquidLicense.getLicenseKey() + "&plugin=" + bukkit == null ? bungee.getDescription().getName() : bukkit.getName() + "&mac=" + HostUtils.getMacAdress());
             licenseResponseType = LicenseResponseType.valueOf(response);
         } catch (Exception exception) {
             if (exception.getMessage().contains("protocol")) {
                 throw new LicenseException("Please Specify a Protocol like http://" + this.uri, new Throwable(String.valueOf(LicenseErrorType.INTERNAL_ERROR)), LicenseErrorType.INTERNAL_ERROR);
             }
             exception.printStackTrace();
-            throw new LicenseException("Make sure the LiquidLicenseServer on " + this.uri + " is running and up to date!", new Throwable(String.valueOf(LicenseErrorType.SERVER_DOWN)), LicenseErrorType.SERVER_DOWN);
+            throw new LicenseException("Make sure the LicenseServer on " + this.uri + " is running and up to date!", new Throwable(String.valueOf(LicenseErrorType.SERVER_DOWN)), LicenseErrorType.SERVER_DOWN);
         }
         if(licenseResponseType == null) {
-            throw new LicenseException("Make sure the LiquidLicenseServer on " + this.uri + " is running and up to date!", new Throwable(String.valueOf(LicenseErrorType.SERVER_DOWN)), LicenseErrorType.SERVER_DOWN);
+            throw new LicenseException("Make sure the LicenseServer on " + this.uri + " is running and up to date!", new Throwable(String.valueOf(LicenseErrorType.SERVER_DOWN)), LicenseErrorType.SERVER_DOWN);
         } else if (licenseResponseType.equals(LicenseResponseType.LICENSE_VALID)) {
             this.plugin.onLicenseVerified(liquidLicense);
             return;
@@ -77,8 +77,11 @@ public class LiquidLicenseLib {
         } else if (licenseResponseType.equals(LicenseResponseType.WRONG_IP)) {
             this.plugin.onLicenseDenied(liquidLicense, DenyType.WRONG_IP);
             return;
+        } else if (licenseResponseType.equals(LicenseResponseType.INTERNAL_ERROR)) {
+            this.plugin.onLicenseError(new LicenseException("The License Server has occured an Internal Error", new Throwable(), LicenseErrorType.INTERNAL_ERROR));
         } else if (licenseResponseType.equals(LicenseResponseType.FORCE_DELETE)) {
-            // Future function
+            this.plugin.onLicenseDenied(liquidLicense, DenyType.INVALID);
+             /* Future function */
             return;
         }
 

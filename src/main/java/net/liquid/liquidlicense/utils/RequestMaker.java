@@ -14,17 +14,15 @@ package net.liquid.liquidlicense.utils;/*
  *	bedarf der ausdrücklichen, schriftlichen Zustimmung von Finn Behrend    	*
  */
 
-import java.io.FileNotFoundException;
+import java.io.BufferedReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Locale;
 import java.util.Properties;
 
 public class RequestMaker {
-
-    public static void main(String[] args) throws Exception {
-        new RequestMaker().makeResponseRequest("https://httpreq.com/black-breeze-0fr3a087/record");
-    }
 
     public String makeResponseRequest(String urlString) throws Exception {
 
@@ -42,7 +40,7 @@ public class RequestMaker {
         URL url = new URL(urlString);
 
         URLConnection urlConnection = url.openConnection();
-        urlConnection.setRequestProperty("User-Agent", "LiquidLicense/"+version+" (liquiddevelopmentnet; U; LiquidLicense; en-US; rv:1.9.2.2) Gecko/20100316 LiquidLicense/"+version);
+        urlConnection.setRequestProperty("User-Agent", "LiquidLicense/"+version+" (liquiddevelopmentnet; iloveliquid; pleasedontsteal; "+ Locale.getDefault() +")");
 
         return urlConnection.getHeaderField("response");
 
