@@ -5,7 +5,7 @@
  Addon for Licensing your Plugins for Minecraft
 
 ### Setup with Maven
-####note: repository is currently down, sorry for problems
+NOTE: repository is currently down, sorry for trouble
 1. add Repository:
 ```xml
 <repositories>
