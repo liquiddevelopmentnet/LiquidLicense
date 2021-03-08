@@ -5,13 +5,12 @@
  Addon for Licensing your Plugins for Minecraft
 
 ### Setup with Maven
-NOTE: repository is currently down, sorry for trouble
 1. add Repository:
 ```xml
 <repositories>
    <repository>
-      <id>minemix</id>
-      <url>http://oss.minemix.de/repository/maven-releases/</url>
+      <id>LiquidLicense</id>
+      <url>https://raw.githubusercontent.com/liquiddevelopmentnet/LiquidLicense/mavenrepo/</url>
    </repository>
 </repositories>
 ```

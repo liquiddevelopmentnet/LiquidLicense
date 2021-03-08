@@ -70,7 +70,7 @@
             </plugin>
 
         </plugins>
-        <directory>C:\Users\Finn\IdeaProjects\XLicense\build</directory>
+        <directory>C:\Users\Finn\IdeaProjects\LiquidLicense\target</directory>
     </build>
 
     <properties>
