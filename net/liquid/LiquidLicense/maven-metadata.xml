@@ -3,10 +3,11 @@
   <groupId>net.liquid</groupId>
   <artifactId>LiquidLicense</artifactId>
   <versioning>
-    <release>3.1</release>
+    <release>latest</release>
     <versions>
       <version>3.1</version>
+      <version>latest</version>
     </versions>
-    <lastUpdated>20210308152709</lastUpdated>
+    <lastUpdated>20210308152740</lastUpdated>
   </versioning>
 </metadata>
