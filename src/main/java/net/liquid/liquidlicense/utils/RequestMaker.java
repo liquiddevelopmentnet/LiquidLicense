@@ -14,15 +14,21 @@ package net.liquid.liquidlicense.utils;/*
  *	bedarf der ausdrücklichen, schriftlichen Zustimmung von Finn Behrend    	*
  */
 
-import java.io.BufferedReader;
+import net.liquid.liquidlicense.types.LicenseResponseType;
+
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Locale;
 import java.util.Properties;
 
 public class RequestMaker {
+
+    public static void main(String[] args) throws Exception {
+
+        System.out.println(LicenseResponseType.valueOf(new RequestMaker().makeResponseRequest("http://localhost:63342/LiquidLicense/liquidlicense-web/req/index.php")));
+
+    }
 
     public String makeResponseRequest(String urlString) throws Exception {
 

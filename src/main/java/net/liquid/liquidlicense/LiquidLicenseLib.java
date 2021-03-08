@@ -52,7 +52,11 @@ public class LiquidLicenseLib {
 
         try {
             response = new RequestMaker().makeResponseRequest(this.uri + "/req/" + "?key=" + liquidLicense.getLicenseKey() + "&plugin=" + bukkit == null ? bungee.getDescription().getName() : bukkit.getName() + "&pversion=" + bukkit == null ? bungee.getDescription().getVersion() : bukkit.getDescription().getVersion() + "&mac=" + HostUtils.getMacAdress());
-            licenseResponseType = LicenseResponseType.valueOf(response);
+            try {
+                licenseResponseType = LicenseResponseType.valueOf(response);
+            } catch (EnumConstantNotPresentException exception) {
+                licenseResponseType = LicenseResponseType.INTERNAL_ERROR;
+            }
         } catch (Exception exception) {
             if (exception.getMessage().contains("protocol")) {
                 throw new LicenseException("Please Specify a Protocol like http://" + this.uri, new Throwable(String.valueOf(LicenseErrorType.INTERNAL_ERROR)), LicenseErrorType.INTERNAL_ERROR);
