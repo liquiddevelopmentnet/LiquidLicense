@@ -106,13 +106,9 @@
 
     <distributionManagement>
         <repository>
-            <id>minemix</id>
-            <url>http://oss.minemix.de/repository/maven-releases/</url>
+            <id>github</id>
+            <url>file://${project.basedir}/mavenrepo</url>
         </repository>
-        <snapshotRepository>
-            <id>minemix</id>
-            <url>http://oss.minemix.de/repository/maven-snapshots/</url>
-        </snapshotRepository>
     </distributionManagement>
 
 </project>
