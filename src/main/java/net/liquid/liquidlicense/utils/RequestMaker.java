@@ -24,12 +24,6 @@ import java.util.Properties;
 
 public class RequestMaker {
 
-    public static void main(String[] args) throws Exception {
-
-        System.out.println(LicenseResponseType.valueOf(new RequestMaker().makeResponseRequest("http://localhost:63342/LiquidLicense/liquidlicense-web/req/index.php")));
-
-    }
-
     public String makeResponseRequest(String urlString) throws Exception {
 
         Properties prop = new Properties();
